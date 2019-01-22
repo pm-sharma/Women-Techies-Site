@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <!--<link href="css/fullpage.css">-->
@@ -188,7 +189,40 @@
 <script type="text/javascript" src="fullpage/fullpage.extensions.min.js"></script>
 
 <script>
+        function animateCSS(element, animationName, callback) {
+            const node = document.querySelector(element)
+            node.classList.add('animated', animationName, 'delay-0.5s')
 
+            function handleAnimationEnd() {
+                node.classList.remove('animated', animationName)
+                node.removeEventListener('animationend', handleAnimationEnd)
+
+                if (typeof callback === 'function') callback()
+            }
+
+            node.addEventListener('animationend', handleAnimationEnd)
+        }
+    
+        function applyAnimations(i){
+            if(i === "two"){
+                animateCSS('#leftAbt', 'fadeInLeft');    
+                animateCSS('#desc', 'fadeInRight');    
+            }
+            else if( i === "three"){
+                animateCSS('#leftPs', 'fadeInRight');    
+                animateCSS('#details', 'fadeInLeft');    
+            }
+            else if( i === "four"){
+                animateCSS('#rightTr', 'fadeInLeft');    
+                animateCSS('#about', 'fadeInRight');    
+            }
+            else if( i === "five"){
+                animateCSS('#leftDet', 'fadeInRight');    
+                animateCSS('#event', 'fadeInLeft');    
+            }
+            
+        }
+         animateCSS('#img-mid', 'fadeInUp');
         $('#fullpage').fullpage({
             //options here
             autoScrolling:true,
@@ -198,7 +232,23 @@
             navigation:true,
             navigationPosition: 'right',
             anchors:['one', 'two', 'three', 'four', 'five'],
-            responsiveWidth:800
+            responsiveWidth:800,
+            afterLoad: function(anchorLink, index,slideAnchor, slideIndex){
+                console.log(index['anchor']);
+            },
+            onLeave: function(origin, destination, direction){
+                var leavingSection = this;
+                console.log(origin, destination, direction);
+                applyAnimations(destination['anchor']); 
+                //after leaving section 2
+                if(origin.index == 1 && direction =='down'){
+//                    alert("Going to section 3!");
+                }
+
+                else if(origin.index == 1 && direction == 'up'){
+//                    alert("Going to section 1!");
+                }
+            }
         });
         // $("#clicks").on('click',function() {
         //     $('html, body').animate({
@@ -210,21 +260,6 @@
         $.fn.fullpage.setAllowScrolling(true);
 
 
-    // $(document).ready( function () {
-
-    //     $(window).resize(function() {
-    //         if( $(this).width() > 1000 ) {
-    //             $('#fullpage').fullpage({
-    //                 //options here
-    //                 autoScrolling:true,
-    //                 scrollHorizontally: true
-    //             });
-    //
-    //             //methods
-    //             $.fn.fullpage.setAllowScrolling(true);
-    //         }
-    //     });
-    // })
 
 
 </script>
