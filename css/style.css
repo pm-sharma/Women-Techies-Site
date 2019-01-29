@@ -232,7 +232,7 @@ body {
         margin-top : 14vh;
     }
     .coming-soon{
-        font-size: 2em;
+        font-size: 1.4em;
     }
 
 }
@@ -247,7 +247,9 @@ body {
         margin-top : 65vh;
         display: flex;
     }
-
+    .coming-soon{
+        font-size: 4em;
+    }
     #desc {
         color: white;
         margin-left: 10vw;
