@@ -231,6 +231,9 @@ body {
     #cont {
         margin-top : 14vh;
     }
+    .coming-soon{
+        font-size: 2em;
+    }
 
 }
 @media (min-width : 801px) {
